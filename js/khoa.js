@@ -87,7 +87,6 @@ const gameStatus = () => {
         i--
         timer.textContent = i
         const gameResult = checkWin()
-        console.log(board.querySelectorAll('.win').length)
         if (i === 0 || gameResult) {
             clearInterval(countDown)
             board.querySelectorAll('.win').forEach(el => el.classList.add('win'))
@@ -98,17 +97,24 @@ const gameStatus = () => {
 
 }
 
+const gameInit = () => {
+    const shuffleColorArr = shuffleColor(colors)
+    assignColor(overlays, shuffleColorArr)
+    const active = board.querySelectorAll('.active')
+    active.forEach(el => el.classList.remove('active'))
+    const win = board.querySelectorAll('.win')
+    win.forEach(el => el.classList.remove('win'))
+    board.addEventListener('click', clickCell)
+    gameStatus()
+}
+
 board.addEventListener('click', clickCell)
 playBtn.addEventListener('click', () => {
     gameInit()
     togglePlayBtn('0','hidden')
 })
 
-const gameInit = () => {
-    const shuffleColorArr = shuffleColor(colors)
-    assignColor(overlays, shuffleColorArr)
-    gameStatus()
-}
+
 
 gameInit()
 
